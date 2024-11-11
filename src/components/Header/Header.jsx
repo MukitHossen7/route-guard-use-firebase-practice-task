@@ -60,7 +60,12 @@ const Header = () => {
               </div>
             )}
 
-            {user && <NavLink to="/dashboard">Dashboard</NavLink>}
+            {user && (
+              <div className="flex gap-10">
+                <NavLink to="/dashboard">Dashboard</NavLink>
+                <NavLink to="/profile">Profile</NavLink>
+              </div>
+            )}
           </ul>
         </div>
         <div className="navbar-end gap-3">

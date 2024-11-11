@@ -1,10 +1,11 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 
 const Login = () => {
   const { signInExistingUsers } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -15,6 +16,7 @@ const Login = () => {
         console.log("User signed in successfully", result);
         e.target.reset();
         toast.success("signed in successfully");
+        navigate("/");
       })
       .catch((error) => {
         console.error("Error signing in user", error);
