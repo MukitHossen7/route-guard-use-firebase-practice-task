@@ -27,8 +27,8 @@ const Header = () => {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <NavLink to="/">Home</NavLink>
-              <NavLink to="/">LogIn</NavLink>
-              <NavLink to="/">Register</NavLink>
+              <NavLink to="/login">LogIn</NavLink>
+              <NavLink to="/register">Register</NavLink>
             </ul>
           </div>
 
@@ -39,8 +39,8 @@ const Header = () => {
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 gap-10 font-medium">
             <NavLink to="/">Home</NavLink>
-            <NavLink to="/">LogIn</NavLink>
-            <NavLink to="/">Register</NavLink>
+            <NavLink to="/login">LogIn</NavLink>
+            <NavLink to="/register">Register</NavLink>
           </ul>
         </div>
         <div className="navbar-end">
