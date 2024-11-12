@@ -2,9 +2,12 @@ import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 const Login = () => {
-  const { signInExistingUsers } = useContext(AuthContext);
+  const { signInExistingUsers, signInWithGoogle, signInWithGithub } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
@@ -19,7 +22,32 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
+        toast.error("Invalid email and password!");
         console.error("Error signing in user", error);
+      });
+  };
+  const handleSigninGoogle = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log("User signed in with Google", result);
+        toast.success("Signed in with Google successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error signing in with Google", error);
+        toast.error("Failed to sign in with Google");
+      });
+  };
+  const handleSigninGithub = () => {
+    signInWithGithub()
+      .then((result) => {
+        console.log("User signed in with Github", result);
+        toast.success("Signed in with Github successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error signing in with Github", error);
+        toast.error("Failed to sign in with Github");
       });
   };
   return (
@@ -64,13 +92,29 @@ const Login = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Login</button>
               </div>
-              <p className="pt-4 text-sm font-semibold text-center">
-                New to the website? please{" "}
-                <span className="text-base text-sky-500 underline">
-                  <Link to="/register">Register</Link>
-                </span>{" "}
-              </p>
             </form>
+            <div className="flex flex-col space-y-4 px-7">
+              <button
+                onClick={handleSigninGoogle}
+                className="flex items-center justify-center font-medium gap-2 border border-sky-300 py-2 px-4 w-full rounded-full"
+              >
+                {" "}
+                <FcGoogle className="text-xl" /> Sign up with Google
+              </button>
+              <button
+                onClick={handleSigninGithub}
+                className="flex items-center justify-center font-medium gap-2 border border-sky-300 py-2 px-4 w-full rounded-full"
+              >
+                {" "}
+                <FaGithub className="text-xl" /> Sign up with Github
+              </button>
+            </div>
+            <p className="py-4 text-sm font-semibold text-center">
+              New to the website? please{" "}
+              <span className="text-base text-sky-500 underline">
+                <Link to="/register">Register</Link>
+              </span>{" "}
+            </p>
           </div>
         </div>
       </div>

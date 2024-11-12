@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 
 const Register = () => {
   const { createSignUpNewUsers } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const handleRegister = (e) => {
     e.preventDefault();
@@ -19,6 +20,7 @@ const Register = () => {
         navigate("/");
       })
       .catch((error) => {
+        toast.error("Already created account this email!");
         console.error("Error registering user", error);
       });
   };
