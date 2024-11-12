@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
@@ -8,9 +8,15 @@ import { IoEyeSharp } from "react-icons/io5";
 
 const Login = () => {
   const [signToggle, setSignToggle] = useState(false);
-  const { signInExistingUsers, signInWithGoogle, signInWithGithub } =
-    useContext(AuthContext);
+  const emailRef = useRef();
+  const {
+    signInExistingUsers,
+    signInWithGoogle,
+    signInWithGithub,
+    forgetPassword,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -55,6 +61,20 @@ const Login = () => {
   const handleToggleSignBtn = () => {
     setSignToggle(!signToggle);
   };
+  const handleForgetPassword = () => {
+    const email = emailRef.current.value;
+    if (email) {
+      forgetPassword(email)
+        .then(() => {
+          toast.success("Password reset email sent successfully");
+        })
+        .catch((error) => {
+          console.log("Error", error);
+        });
+    } else {
+      toast.error("Please enter your email address");
+    }
+  };
   return (
     <div className="mt-14">
       <h1 className="font-semibold text-3xl text-center">Login Now!</h1>
@@ -70,6 +90,7 @@ const Login = () => {
                   <span className="label-text">Email</span>
                 </label>
                 <input
+                  ref={emailRef}
                   type="email"
                   name="email"
                   placeholder="email"
@@ -96,7 +117,11 @@ const Login = () => {
                     <IoEyeSharp className="absolute right-2 top-12 text-xl" />
                   )}
                 </button>
-                <label className="label">
+                <label
+                  className="label"
+                  type="button"
+                  onClick={handleForgetPassword}
+                >
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?
                   </a>

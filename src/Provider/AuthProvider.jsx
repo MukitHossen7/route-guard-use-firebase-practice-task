@@ -4,6 +4,7 @@ import {
   GithubAuthProvider,
   GoogleAuthProvider,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -35,7 +36,9 @@ const AuthProvider = ({ children }) => {
   const signInWithGithub = () => {
     return signInWithPopup(auth, githubProvider);
   };
-
+  const forgetPassword = (email) => {
+    return sendPasswordResetEmail(auth, email);
+  };
   useEffect(() => {
     const connection = onAuthStateChanged(auth, (currentUser) => {
       console.log("User is signed in:", currentUser);
@@ -58,6 +61,7 @@ const AuthProvider = ({ children }) => {
     loading,
     signInWithGoogle,
     signInWithGithub,
+    forgetPassword,
   };
 
   return (
