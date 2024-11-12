@@ -14,9 +14,13 @@ const Login = () => {
     signInWithGoogle,
     signInWithGithub,
     forgetPassword,
+    user,
   } = useContext(AuthContext);
   const navigate = useNavigate();
-
+  if (user) {
+    navigate("/");
+    return;
+  }
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -30,7 +34,7 @@ const Login = () => {
         navigate("/");
       })
       .catch((error) => {
-        toast.error("Invalid email and password!");
+        toast.error("Invalid Credential Email/Password");
         console.error("Error signing in user", error);
       });
   };
@@ -137,14 +141,14 @@ const Login = () => {
                 className="flex items-center justify-center font-medium gap-2 border border-sky-300 py-2 px-4 w-full rounded-full"
               >
                 {" "}
-                <FcGoogle className="text-xl" /> Sign up with Google
+                <FcGoogle className="text-xl" /> Sign in with Google
               </button>
               <button
                 onClick={handleSigninGithub}
                 className="flex items-center justify-center font-medium gap-2 border border-sky-300 py-2 px-4 w-full rounded-full"
               >
                 {" "}
-                <FaGithub className="text-xl" /> Sign up with Github
+                <FaGithub className="text-xl" /> Sign in with Github
               </button>
             </div>
             <p className="py-4 text-sm font-semibold text-center">

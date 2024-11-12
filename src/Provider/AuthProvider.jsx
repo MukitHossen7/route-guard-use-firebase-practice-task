@@ -52,6 +52,9 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  const updateUser = (user) => {
+    setUser(user);
+  };
   const name = "Mukit";
   const authInfo = {
     name,
@@ -63,6 +66,7 @@ const AuthProvider = ({ children }) => {
     signInWithGoogle,
     signInWithGithub,
     forgetPassword,
+    updateUser,
   };
 
   return (

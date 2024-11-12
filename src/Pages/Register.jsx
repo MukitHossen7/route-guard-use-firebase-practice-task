@@ -6,7 +6,7 @@ import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-  const { createSignUpNewUsers } = useContext(AuthContext);
+  const { createSignUpNewUsers, user } = useContext(AuthContext);
   const [toggle, setToggle] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [isTerms, setIsTerms] = useState("");
@@ -19,7 +19,10 @@ const Register = () => {
   const hasLowerCase = /[a-z]/;
   const hasNumber = /\d/;
   const hasSpecialChar = /[@$!%*?&]/;
-
+  if (user) {
+    navigate("/");
+    return;
+  }
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
