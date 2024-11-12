@@ -39,6 +39,7 @@ const AuthProvider = ({ children }) => {
   const forgetPassword = (email) => {
     return sendPasswordResetEmail(auth, email);
   };
+
   useEffect(() => {
     const connection = onAuthStateChanged(auth, (currentUser) => {
       console.log("User is signed in:", currentUser);

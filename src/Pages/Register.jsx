@@ -10,6 +10,9 @@ const Register = () => {
   const [toggle, setToggle] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [isTerms, setIsTerms] = useState("");
+  const [nameEmpty, setNameEmpty] = useState("");
+  const [emailEmpty, setEmailEmpty] = useState("");
+
   const navigate = useNavigate();
   const minLength = /.{6,}/;
   const hasUpperCase = /[A-Z]/;
@@ -22,9 +25,21 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const terms = e.target.terms.checked;
-
+    const name = e.target.name.value;
+    console.log(email, password, name);
     setPasswordError("");
     setIsTerms("");
+    setNameEmpty("");
+    setEmailEmpty("");
+
+    if (!name) {
+      setNameEmpty("Name is required");
+      return;
+    }
+    if (!email) {
+      setEmailEmpty("Email is required");
+      return;
+    }
 
     const validatePassword = (password) => {
       if (!minLength.test(password)) {
@@ -87,9 +102,17 @@ const Register = () => {
                   name="name"
                   placeholder="Full Name"
                   className="input input-bordered"
-                  required
                 />
               </div>
+
+              <span
+                className={`text-red-500 text-sm font-semibold ${
+                  nameEmpty ? "" : "hidden"
+                }`}
+              >
+                {nameEmpty}
+              </span>
+
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
@@ -99,9 +122,15 @@ const Register = () => {
                   name="email"
                   placeholder="email"
                   className="input input-bordered"
-                  required
                 />
               </div>
+              <span
+                className={`text-red-500 text-sm font-semibold ${
+                  emailEmpty ? "" : "hidden"
+                }`}
+              >
+                {emailEmpty}
+              </span>
               <div className="form-control relative">
                 <label className="label">
                   <span className="label-text">Password</span>
@@ -111,7 +140,6 @@ const Register = () => {
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
-                  required
                 />
                 <button type="button" onClick={handleToggleBtn}>
                   {" "}
