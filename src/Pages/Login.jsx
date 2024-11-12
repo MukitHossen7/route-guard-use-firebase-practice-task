@@ -1,11 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
+import { FaEyeSlash, FaGithub } from "react-icons/fa";
+import { IoEyeSharp } from "react-icons/io5";
 
 const Login = () => {
+  const [signToggle, setSignToggle] = useState(false);
   const { signInExistingUsers, signInWithGoogle, signInWithGithub } =
     useContext(AuthContext);
   const navigate = useNavigate();
@@ -50,6 +52,9 @@ const Login = () => {
         toast.error("Failed to sign in with Github");
       });
   };
+  const handleToggleSignBtn = () => {
+    setSignToggle(!signToggle);
+  };
   return (
     <div className="mt-14">
       <h1 className="font-semibold text-3xl text-center">Login Now!</h1>
@@ -72,17 +77,25 @@ const Login = () => {
                   required
                 />
               </div>
-              <div className="form-control">
+              <div className="form-control relative">
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="password"
+                  type={signToggle ? "text" : "password"}
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
                   required
                 />
+                <button type="button" onClick={handleToggleSignBtn}>
+                  {" "}
+                  {signToggle ? (
+                    <FaEyeSlash className="absolute right-2 top-12 text-xl" />
+                  ) : (
+                    <IoEyeSharp className="absolute right-2 top-12 text-xl" />
+                  )}
+                </button>
                 <label className="label">
                   <a href="#" className="label-text-alt link link-hover">
                     Forgot password?

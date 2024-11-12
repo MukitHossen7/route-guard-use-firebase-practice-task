@@ -1,17 +1,58 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import { IoEyeSharp } from "react-icons/io5";
+import { FaEyeSlash } from "react-icons/fa";
 
 const Register = () => {
   const { createSignUpNewUsers } = useContext(AuthContext);
-
+  const [toggle, setToggle] = useState(false);
+  const [passwordError, setPasswordError] = useState("");
+  const [isTerms, setIsTerms] = useState("");
   const navigate = useNavigate();
+  const minLength = /.{6,}/;
+  const hasUpperCase = /[A-Z]/;
+  const hasLowerCase = /[a-z]/;
+  const hasNumber = /\d/;
+  const hasSpecialChar = /[@$!%*?&]/;
+
   const handleRegister = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    console.log(email, password);
+    const terms = e.target.terms.checked;
+
+    setPasswordError("");
+    setIsTerms("");
+
+    const validatePassword = (password) => {
+      if (!minLength.test(password)) {
+        return "Password should be at least 6 characters long";
+      }
+      if (!hasUpperCase.test(password)) {
+        return "Uppercase letter include must to the password";
+      }
+      if (!hasLowerCase.test(password)) {
+        return "Lowercase letter include must to the password";
+      }
+      if (!hasNumber.test(password)) {
+        return "One number include must to the password";
+      }
+      if (!hasSpecialChar.test(password)) {
+        return "Special character include must to the password";
+      }
+      return "";
+    };
+    const errorMessage = validatePassword(password);
+    if (errorMessage) {
+      setPasswordError(errorMessage);
+      return;
+    }
+    if (!terms) {
+      setIsTerms("Check our terms and conditions");
+      return;
+    }
     createSignUpNewUsers(email, password)
       .then((result) => {
         console.log("User registered successfully", result);
@@ -24,7 +65,9 @@ const Register = () => {
         console.error("Error registering user", error);
       });
   };
-
+  const handleToggleBtn = () => {
+    setToggle(!toggle);
+  };
   return (
     <div className="mt-14">
       <h1 className="font-semibold text-3xl text-center">Register Now!</h1>
@@ -59,18 +102,59 @@ const Register = () => {
                   required
                 />
               </div>
-              <div className="form-control">
+              <div className="form-control relative">
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
                 <input
-                  type="password"
+                  type={toggle ? "text" : "password"}
                   name="password"
                   placeholder="password"
                   className="input input-bordered"
                   required
                 />
+                <button type="button" onClick={handleToggleBtn}>
+                  {" "}
+                  {toggle ? (
+                    <FaEyeSlash className="absolute right-2 top-12 text-xl" />
+                  ) : (
+                    <IoEyeSharp className="absolute right-2 top-12 text-xl" />
+                  )}
+                </button>
               </div>
+              <span
+                className={`font-bold text-xs text-red-500 ${
+                  passwordError ? "" : "hidden"
+                }`}
+              >
+                {passwordError}
+              </span>
+              <div className="form-control">
+                <label className="cursor-pointer label  justify-start gap-3">
+                  <input
+                    type="checkbox"
+                    name="terms"
+                    className="checkbox checkbox-accent w-5 h-5"
+                  />
+                  <p className="text-xs font-medium pt-5">
+                    You agree to the{" "}
+                    <span className="text-sky-500 text-sm underline">
+                      Terms of Services
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-sky-500 text-sm underline">
+                      Privacy Policy
+                    </span>
+                  </p>
+                </label>
+              </div>
+              <span
+                className={`font-bold text-xs text-red-500 ${
+                  isTerms ? "" : "hidden"
+                }`}
+              >
+                {isTerms}
+              </span>
               <div className="form-control mt-6">
                 <button className="btn btn-primary font-semibold">
                   Register
