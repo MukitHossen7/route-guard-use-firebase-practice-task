@@ -4,6 +4,8 @@ import { AuthContext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
+import { signOut } from "firebase/auth";
+import auth from "../firebase.init";
 
 const Register = () => {
   const { createSignUpNewUsers, user } = useContext(AuthContext);
@@ -76,7 +78,8 @@ const Register = () => {
         console.log("User registered successfully", result);
         toast.success("Registered successfully");
         e.target.reset();
-        navigate("/");
+        navigate("/login");
+        signOut(auth).then(() => {});
       })
       .catch((error) => {
         toast.error("Already created account this email!");
