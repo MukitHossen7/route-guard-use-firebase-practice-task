@@ -1,20 +1,48 @@
+import BlogCard from "./Blogs";
+
 const Home = () => {
   return (
-    <div className="mt-10">
-      <div className="hero py-28 rounded-xl">
-        <div className="hero-content text-center">
-          <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Hello Home Page</h1>
-            <p className="py-6">
-              Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-              excepturi exercitationem quasi. In deleniti eaque aut repudiandae
-              et a id nisi.
-            </p>
-            <button className="btn btn-primary">Get Started</button>
+    <section className="bg-white pb-10 pt-20 dark:bg-dark lg:pb-20 lg:pt-[120px] container mx-auto">
+      <div className="container">
+        <div className="-mx-4 flex flex-wrap">
+          <div className="w-full px-4">
+            <div className="mx-auto mb-[60px] max-w-[510px] text-center lg:mb-20">
+              <span className="mb-2 block text-lg font-semibold text-primary">
+                Our Blogs
+              </span>
+              <h2 className="mb-4 text-3xl font-bold text-dark  sm:text-4xl md:text-[40px]">
+                Our Recent News
+              </h2>
+              <p className="text-base text-body-color dark:text-dark-6">
+                There are many variations of passages of Lorem Ipsum available
+                but the majority have suffered alteration in some form.
+              </p>
+            </div>
           </div>
         </div>
+
+        <div className="-mx-4 flex flex-wrap">
+          <BlogCard
+            date="Dec 22, 2023"
+            CardTitle="Meet AutoManage, the best AI management tools"
+            CardDescription="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+            image="https://i.ibb.co/Cnwd4q6/image-01.jpg"
+          />
+          <BlogCard
+            date="Dec 22, 2023"
+            CardTitle="Meet AutoManage, the best AI management tools"
+            CardDescription="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+            image="https://i.ibb.co/Y23YC07/image-02.jpg"
+          />
+          <BlogCard
+            date="Dec 22, 2023"
+            CardTitle="Meet AutoManage, the best AI management tools"
+            CardDescription="Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+            image="https://i.ibb.co/7jdcnwn/image-03.jpg"
+          />
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

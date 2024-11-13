@@ -47,7 +47,7 @@ const Header = () => {
           </div>
 
           <Link to="/" className="text-xl font-semibold">
-            RouteGuard
+            Route Private
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
