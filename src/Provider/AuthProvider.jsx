@@ -55,7 +55,7 @@ const AuthProvider = ({ children }) => {
   const updateUser = (user) => {
     setUser(user);
   };
-  const name = "Mukit";
+  const name = "Ranju";
   const authInfo = {
     name,
     createSignUpNewUsers,

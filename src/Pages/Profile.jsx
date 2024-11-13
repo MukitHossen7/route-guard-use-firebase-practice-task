@@ -3,7 +3,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 import auth from "../firebase.init";
 import { updateProfile } from "firebase/auth";
 import toast from "react-hot-toast";
-
+import moment from "moment";
 const Profile = () => {
   const { user, updateUser } = useContext(AuthContext);
   console.log(user);
@@ -11,9 +11,14 @@ const Profile = () => {
     e.preventDefault();
     const name = e.target.name.value;
     const photo = e.target.photo.value;
+
     updateProfile(auth.currentUser, { displayName: name, photoURL: photo })
       .then(() => {
-        updateUser({ ...user, displayName: name, photoURL: photo });
+        updateUser({
+          ...user,
+          displayName: name.length > 0 ? name : user?.displayName,
+          photoURL: photo.length > 0 ? photo : user?.photoURL,
+        });
         toast.success("Profile updated successfully");
       })
       .catch((error) => {
@@ -27,6 +32,7 @@ const Profile = () => {
         <p className="font-medium text-xl">View Your Profile</p>
         <p className="font-semibold">Name : {user?.displayName} </p>
         <p className="font-semibold">Email : {user?.email} </p>
+        <span>Date: {moment().format("MMMM Do YYYY, h:mm:ss a")} </span>
         <img
           className="w-28 h-28 object-cover rounded-xl"
           src={user?.photoURL}
